@@ -7,6 +7,8 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
+using InoveTeste.PageObject;
+using OpenQA.Selenium.Support.PageObjects;
 
 namespace ST01Contato
 {
@@ -45,17 +47,20 @@ namespace ST01Contato
         {
             // Acessa o site
             driver.Navigate().GoToUrl(baseURL + "/contato");
-            // Acessa o menu Contato
-            // driver.FindElement(By.CssSelector("em.fa.fa-bars")).Click();
-            // driver.FindElement(By.CssSelector("div.sidr-inner > #nav-wrap > #primary_menu > #menu-item-80 > a > span")).Click();
+
             // Valida o layout da tela
             Thread.Sleep(20000);
             Assert.AreEqual("Envie uma mensagem", driver.FindElement(By.CssSelector("h1")).Text);
-            Assert.IsTrue(IsElementPresent(By.Name("your-name")));
-            Assert.IsTrue(IsElementPresent(By.Name("your-email")));
-            Assert.IsTrue(IsElementPresent(By.Name("your-subject")));
-            Assert.IsTrue(IsElementPresent(By.Name("your-message")));
-            Assert.IsTrue(IsElementPresent(By.CssSelector("input.wpcf7-form-control.wpcf7-submit")));
+       
+            //Page Object
+            ContatoPageObject contato = new ContatoPageObject();
+            PageFactory.InitElements(driver, contato);
+
+            Assert.IsTrue(contato.name.Displayed);
+            Assert.IsTrue(contato.email.Displayed);
+            Assert.IsTrue(contato.subject.Displayed);
+            Assert.IsTrue(contato.message.Displayed);
+            Assert.IsTrue(contato.enviar.Displayed);
         }
         private bool IsElementPresent(By by)
         {
