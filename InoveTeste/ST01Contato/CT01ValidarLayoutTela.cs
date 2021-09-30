@@ -1,14 +1,12 @@
 using System;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Support.UI;
 using InoveTeste.PageObject;
 using OpenQA.Selenium.Support.PageObjects;
+using InoveTeste;
 
 namespace ST01Contato
 {
@@ -23,7 +21,7 @@ namespace ST01Contato
         [SetUp]
         public void SetupTest()
         {
-            driver = new ChromeDriver();
+            driver = Comandos.GetBrowserLocal(driver, "Chrome");
             baseURL = "https://livros.inoveteste.com.br/";
             verificationErrors = new StringBuilder();
         }

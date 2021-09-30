@@ -1,12 +1,9 @@
 using System;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Support.UI;
+using InoveTeste;
 
 namespace ST01Contato
 {
@@ -21,7 +18,7 @@ namespace ST01Contato
         [SetUp]
         public void SetupTest()
         {
-            driver = new ChromeDriver();
+            driver = Comandos.GetBrowserLocal(driver, "Chrome");
             baseURL = "https://livros.inoveteste.com.br/";
             verificationErrors = new StringBuilder();
         }
@@ -45,12 +42,11 @@ namespace ST01Contato
         {
             // Acessa o site
             driver.Navigate().GoToUrl(baseURL + "/contato");
-            // Acessa o menu Contato
-            // driver.FindElement(By.CssSelector("em.fa.fa-bars")).Click();
-            // driver.FindElement(By.CssSelector("div.sidr-inner > #nav-wrap > #primary_menu > #menu-item-80 > a > span")).Click();
-            // Clica no botão Salvar sem preencher os campos obrigatórios
+ 
+            //Clica no botão de enviar sem preencher os campos obrigatórios
             Thread.Sleep(20000);
             driver.FindElement(By.CssSelector("input.wpcf7-form-control.wpcf7-submit")).Click();
+           
             // Valida as mensagens de crítica dos campos obrigatórios
             Thread.Sleep(10000);
             Assert.AreEqual("O campo é obrigatório.", driver.FindElement(By.CssSelector("span.wpcf7-not-valid-tip")).Text);

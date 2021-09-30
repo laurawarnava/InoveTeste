@@ -1,12 +1,10 @@
 using System;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Support.UI;
+using InoveTeste;
 
 namespace ST01Contato
 {
@@ -22,8 +20,7 @@ namespace ST01Contato
         [SetUp]
         public void SetupTest()
         {
-            driver = new ChromeDriver();
-            driver.Manage().Window.Maximize();
+            driver = Comandos.GetBrowserLocal(driver, "Chrome");
             baseURL = "https://livros.inoveteste.com.br/";
             verificationErrors = new StringBuilder();
         }
@@ -47,9 +44,7 @@ namespace ST01Contato
         {
             // Acessa o site
             driver.Navigate().GoToUrl(baseURL + "/contato");
-            // Acessa o menu Contato
-            // driver.FindElement(By.CssSelector("em.fa.fa-bars")).Click();
-            // driver.FindElement(By.CssSelector("div.sidr-inner > #nav-wrap > #primary_menu > #menu-item-80 > a > span")).Click();
+
             // Preenche todos os campos do formulário
             Thread.Sleep(20000);
             driver.FindElement(By.Name("your-name")).Clear();
@@ -60,10 +55,10 @@ namespace ST01Contato
             driver.FindElement(By.Name("your-subject")).SendKeys("Qual o valor do livro impresso?");
             driver.FindElement(By.Name("your-message")).Clear();
             driver.FindElement(By.Name("your-message")).SendKeys("Gostaria de saber qual o valor do livro impresso + frete para o cep 00000-000");
+            
             // Clica no botão Enviar após preencher todos os campos obrigatórios
-            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
-            js.ExecuteScript("document.querySelector('input.wpcf7-form-control.wpcf7-submit').click();");
-            //driver.FindElement(By.CssSelector("input.wpcf7-form-control.wpcf7-submit")).Click();
+            Comandos.ExecuteJS(driver, "document.querySelector('input.wpcf7-form-control.wpcf7-submit').click();");
+            
             // Valida a mensagem de sucesso do envio da mensagem.
             Thread.Sleep(10000);
             Assert.AreEqual("Agradecemos a sua mensagem. Responderemos em breve.", driver.FindElement(By.XPath("//div[@id='wpcf7-f372-p24-o1']/form/div[2]")).Text);

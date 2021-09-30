@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Comandos.cs" />
     <Compile Include="PageObject\ContatoPageObject.cs" />
     <Compile Include="ST01Contato\CT01ValidarLayoutTela.cs" />
     <Compile Include="ST01Contato\CT02ValidarCamposObrigatorios.cs" />
