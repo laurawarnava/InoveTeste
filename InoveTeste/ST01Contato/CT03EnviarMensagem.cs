@@ -5,6 +5,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using InoveTeste;
+using System.Configuration;
 
 namespace ST01Contato
 {
@@ -20,7 +21,7 @@ namespace ST01Contato
         [SetUp]
         public void SetupTest()
         {
-            driver = Comandos.GetBrowserLocal(driver, "Chrome");
+            driver = Comandos.GetBrowserLocal(driver, ConfigurationManager.AppSettings["browser"]);
             baseURL = "https://livros.inoveteste.com.br/";
             verificationErrors = new StringBuilder();
         }
@@ -48,13 +49,13 @@ namespace ST01Contato
             // Preenche todos os campos do formulário
             Thread.Sleep(20000);
             driver.FindElement(By.Name("your-name")).Clear();
-            driver.FindElement(By.Name("your-name")).SendKeys("Hugo Peres");
+            driver.FindElement(By.Name("your-name")).SendKeys(ConfigurationManager.AppSettings["nome"]);
             driver.FindElement(By.Name("your-email")).Clear();
-            driver.FindElement(By.Name("your-email")).SendKeys("contato@inoveteste.com.br");
+            driver.FindElement(By.Name("your-email")).SendKeys(ConfigurationManager.AppSettings["email"]);
             driver.FindElement(By.Name("your-subject")).Clear();
-            driver.FindElement(By.Name("your-subject")).SendKeys("Qual o valor do livro impresso?");
+            driver.FindElement(By.Name("your-subject")).SendKeys(ConfigurationManager.AppSettings["assunto"]);
             driver.FindElement(By.Name("your-message")).Clear();
-            driver.FindElement(By.Name("your-message")).SendKeys("Gostaria de saber qual o valor do livro impresso + frete para o cep 00000-000");
+            driver.FindElement(By.Name("your-message")).SendKeys(ConfigurationManager.AppSettings["mensagem"]);
             
             // Clica no botão Enviar após preencher todos os campos obrigatórios
             Comandos.ExecuteJS(driver, "document.querySelector('input.wpcf7-form-control.wpcf7-submit').click();");

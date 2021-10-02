@@ -1,4 +1,5 @@
 using System;
+using System.Configuration;
 using System.Text;
 using System.Threading;
 using NUnit.Framework;
@@ -21,7 +22,7 @@ namespace ST01Contato
         [SetUp]
         public void SetupTest()
         {
-            driver = Comandos.GetBrowserLocal(driver, "Chrome");
+            driver = Comandos.GetBrowserLocal(driver, ConfigurationManager.AppSettings["browser"]);
             baseURL = "https://livros.inoveteste.com.br/";
             verificationErrors = new StringBuilder();
         }

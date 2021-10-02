@@ -4,6 +4,7 @@ using System.Threading;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using InoveTeste;
+using System.Configuration;
 
 namespace ST01Contato
 {
@@ -18,7 +19,7 @@ namespace ST01Contato
         [SetUp]
         public void SetupTest()
         {
-            driver = Comandos.GetBrowserLocal(driver, "Chrome");
+            driver = Comandos.GetBrowserLocal(driver, ConfigurationManager.AppSettings["browser"]);
             baseURL = "https://livros.inoveteste.com.br/";
             verificationErrors = new StringBuilder();
         }
