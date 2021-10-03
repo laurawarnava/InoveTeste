@@ -17,6 +17,7 @@ namespace ST01Contato
         private string baseURL;
         private bool acceptNextAlert = true;
         private IJavaScriptExecutor js;
+        CT01ValidarLayoutTela ct01;
 
         [SetUp]
         public void SetupTest()
@@ -25,6 +26,7 @@ namespace ST01Contato
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
             baseURL = "https://livros.inoveteste.com.br/";
             verificationErrors = new StringBuilder();
+            ct01 = new CT01ValidarLayoutTela();
         }
 
         [TearDown]
@@ -44,6 +46,11 @@ namespace ST01Contato
         [Test]
         public void TheCT03EnviarMensagemTest()
         {
+            // Pré-Requisito: Validar layout da tela
+            ct01.SetupTest();
+            ct01.TheCT01ValidarLayoutTelaTest();
+            ct01.TeardownTest();
+
             // Acessa o site
             driver.Navigate().GoToUrl(baseURL + "/contato");
 
