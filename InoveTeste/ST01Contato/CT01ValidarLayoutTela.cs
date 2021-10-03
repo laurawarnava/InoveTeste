@@ -23,6 +23,7 @@ namespace ST01Contato
         public void SetupTest()
         {
             driver = Comandos.GetBrowserLocal(driver, ConfigurationManager.AppSettings["browser"]);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
             baseURL = "https://livros.inoveteste.com.br/";
             verificationErrors = new StringBuilder();
         }
@@ -50,7 +51,7 @@ namespace ST01Contato
             // Valida o layout da tela
             Thread.Sleep(20000);
             Assert.AreEqual("Envie uma mensagem", driver.FindElement(By.CssSelector("h1")).Text);
-       
+        
             //Page Object
             ContatoPageObject contato = new ContatoPageObject();
             PageFactory.InitElements(driver, contato);

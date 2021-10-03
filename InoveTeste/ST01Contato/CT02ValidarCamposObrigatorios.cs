@@ -20,6 +20,7 @@ namespace ST01Contato
         public void SetupTest()
         {
             driver = Comandos.GetBrowserLocal(driver, ConfigurationManager.AppSettings["browser"]);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
             baseURL = "https://livros.inoveteste.com.br/";
             verificationErrors = new StringBuilder();
         }
@@ -45,7 +46,6 @@ namespace ST01Contato
             driver.Navigate().GoToUrl(baseURL + "/contato");
  
             //Clica no botão de enviar sem preencher os campos obrigatórios
-            Thread.Sleep(20000);
             driver.FindElement(By.CssSelector("input.wpcf7-form-control.wpcf7-submit")).Click();
            
             // Valida as mensagens de crítica dos campos obrigatórios

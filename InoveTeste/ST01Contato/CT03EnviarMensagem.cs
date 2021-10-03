@@ -22,6 +22,7 @@ namespace ST01Contato
         public void SetupTest()
         {
             driver = Comandos.GetBrowserLocal(driver, ConfigurationManager.AppSettings["browser"]);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
             baseURL = "https://livros.inoveteste.com.br/";
             verificationErrors = new StringBuilder();
         }
@@ -47,7 +48,6 @@ namespace ST01Contato
             driver.Navigate().GoToUrl(baseURL + "/contato");
 
             // Preenche todos os campos do formulário
-            Thread.Sleep(20000);
             driver.FindElement(By.Name("your-name")).Clear();
             driver.FindElement(By.Name("your-name")).SendKeys(ConfigurationManager.AppSettings["nome"]);
             driver.FindElement(By.Name("your-email")).Clear();
@@ -59,7 +59,7 @@ namespace ST01Contato
             
             // Clica no botão Enviar após preencher todos os campos obrigatórios
             Comandos.ExecuteJS(driver, "document.querySelector('input.wpcf7-form-control.wpcf7-submit').click();");
-            
+
             // Valida a mensagem de sucesso do envio da mensagem.
             Thread.Sleep(10000);
             Assert.AreEqual("Agradecemos a sua mensagem. Responderemos em breve.", driver.FindElement(By.XPath("//div[@id='wpcf7-f372-p24-o1']/form/div[2]")).Text);
